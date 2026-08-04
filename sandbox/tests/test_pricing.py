@@ -1,4 +1,4 @@
-"""Existing regression suite. These all pass today and must keep passing."""
+"""既有回归测试套件。这些用例现在全部通过，必须一直保持通过。"""
 import pytest
 
 from cartkit import Cart, Coupon, LineItem, apply_coupon, subtotal_cents, total_cents
@@ -22,6 +22,7 @@ class TestSubtotal:
         assert subtotal_cents(cart(("A", 1000, 2), ("B", 250, 4))) == 3000
 
     def test_negative_credit_line(self):
+        # 抵扣行（运费补贴）
         assert subtotal_cents(cart(("A", 1000, 1), ("SHIP-CREDIT", -300, 1))) == 700
 
 
@@ -36,13 +37,13 @@ class TestPercentCoupon:
         assert apply_coupon(1000, Coupon("C", "percent", 0)) == 1000
 
     def test_rounds_half_up(self):
-        # 5% of 1005 = 50.25 -> 50
+        # 1005 的 5% = 50.25 -> 50
         assert apply_coupon(1005, Coupon("C", "percent", 5)) == 955
-        # 50% of 101 = 50.5 -> 51
+        # 101 的 50% = 50.5 -> 51
         assert apply_coupon(101, Coupon("C", "percent", 50)) == 50
 
     def test_percent_respects_cap(self):
-        # 50% of 10000 = 5000, capped at 1500
+        # 10000 的 50% = 5000，但上限是 1500
         assert apply_coupon(10000, Coupon("C", "percent", 50, max_discount_cents=1500)) == 8500
 
 
@@ -65,7 +66,7 @@ class TestTotal:
         assert total_cents(cart(("A", 1000, 2)), []) == 2000
 
     def test_coupons_applied_in_sequence(self):
-        # 2000 -> -10% -> 1800 -> -300 -> 1500
+        # 2000 -> 减10% -> 1800 -> 再减300 -> 1500
         coupons = [Coupon("P", "percent", 10), Coupon("F", "fixed", 300)]
         assert total_cents(cart(("A", 1000, 2)), coupons) == 1500
 

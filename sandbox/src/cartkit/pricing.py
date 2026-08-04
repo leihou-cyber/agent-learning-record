@@ -1,19 +1,19 @@
-"""Cart pricing.
+"""购物车计价逻辑。
 
-Contract (this is the spec; the code is expected to honour it):
+契约（这是规格说明，代码应当遵守它）：
 
 1. subtotal_cents(cart)
-   Sum of unit_price_cents * quantity over all items.
+   对所有商品行求和：unit_price_cents * quantity。
 
 2. apply_coupon(subtotal, coupon)
-   - "percent": take value% off, rounded to the nearest cent, half-up.
-   - "fixed":   take `value` cents off.
-   - The result is never below zero.
-   - If coupon.max_discount_cents is set, the discount actually taken
-     must never exceed it, for EVERY coupon kind.
+   - "percent"：按 value% 优惠，四舍五入到分（.5 向上进位）。
+   - "fixed"：直接减免 value 分。
+   - 结果永不小于 0。
+   - 若设置了 coupon.max_discount_cents，则实际优惠金额不得超过该上限，
+     此规则对**所有**券种生效。
 
 3. total_cents(cart, coupons)
-   Coupons are applied in order, each to the running total.
+   多张券按顺序依次作用于当前余额。
 """
 from typing import List
 
@@ -28,14 +28,14 @@ def subtotal_cents(cart: Cart) -> int:
 
 
 def _round_half_up(value: float) -> int:
-    """Round to the nearest integer, .5 always going away from zero."""
+    """四舍五入到最近整数，.5 一律远离零方向进位。"""
     if value < 0:
         return -int(-value + 0.5)
     return int(value + 0.5)
 
 
 def apply_coupon(subtotal_cents_value: int, coupon: Coupon) -> int:
-    """Return the new total after applying one coupon."""
+    """应用一张券，返回优惠后的新余额。"""
     if coupon.kind == "percent":
         discount = _round_half_up(subtotal_cents_value * coupon.value / 100)
         if coupon.max_discount_cents is not None:
@@ -43,7 +43,7 @@ def apply_coupon(subtotal_cents_value: int, coupon: Coupon) -> int:
     elif coupon.kind == "fixed":
         discount = coupon.value
     else:
-        raise ValueError("unknown coupon kind: {}".format(coupon.kind))
+        raise ValueError("未知的券种：{}".format(coupon.kind))
 
     result = subtotal_cents_value - discount
     if result < 0:
