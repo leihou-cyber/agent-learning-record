@@ -1,0 +1,14 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Local application data
+data/*.db
+data/*.db-*
+!data/.gitkeep
+
+# Local Kiro settings; project agents and OpenSpec skills remain versioned
+.kiro/settings/
