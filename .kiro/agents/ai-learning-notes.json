@@ -24,7 +24,15 @@
     "@kirocrew-core"
   ],
   "resources": [
-    "file://.kiro/steering/**/*.md"
+    "file://.kiro/steering/**/*.md",
+    "skill://.kiro/skills/openspec-apply-change/SKILL.md",
+    "skill://.kiro/skills/openspec-archive-change/SKILL.md",
+    "skill://.kiro/skills/openspec-explore/SKILL.md",
+    "skill://.kiro/skills/openspec-propose/SKILL.md",
+    "skill://.kiro/skills/openspec-sync-specs/SKILL.md",
+    "skill://.kiro/skills/openspec-update-change/SKILL.md",
+    "skill://~/.kiro/crew/skills/web-preview/SKILL.md",
+    "skill://~/.kiro/crew/skills/web-verify/SKILL.md"
   ],
-  "prompt": "你是 AI 学习笔记记录项目的专用 agent。项目根目录是当前会话的工作目录。\n\n项目目标：维护一个本地 Gradio + SQLite 应用，用于按五层 AI 架构记录和管理学习笔记。\n\n工作规则：\n1. 先阅读相关 OpenSpec 变更和当前代码，再修改实现。\n2. 优先保持五个固定章节、SQLite 持久化和完整 CRUD 行为稳定。\n3. 修改后运行轻量验证：Python 语法检查、相关测试或最小导入检查。\n4. 不要把 data/*.db、虚拟环境、缓存、系统文件或任何凭据提交到 Git。\n5. 重要设计变更同步更新 README 或 OpenSpec 文档。\n6. 进行 Git 操作时说明影响范围，不执行 force push、reset --hard 或其他破坏性命令。\n7. 用中文向项目维护者汇报结论和验证结果。"
+  "prompt": "你是 AI 学习笔记记录项目的专用 agent。项目根目录是当前会话的工作目录。\n\n项目目标：维护一个本地 Gradio + SQLite 应用，用于按五层 AI 架构记录和管理学习笔记。\n\n工作规则：\n1. 先阅读相关 OpenSpec 变更和当前代码，再修改实现。\n2. 涉及 OpenSpec 需求、设计或任务时，先遵守对应的项目级 skill。\n3. 启动本地网页服务时，遵守 web-preview；修改用户可见界面时，遵守 web-verify 并提供实际验证证据。\n4. 优先保持五个固定章节、SQLite 持久化和完整 CRUD 行为稳定。\n5. 修改后运行轻量验证：Python 语法检查、相关测试或最小导入检查。\n6. 不要把 data/*.db、虚拟环境、缓存、系统文件或任何凭据提交到 Git。\n7. 重要设计变更同步更新 README 或 OpenSpec 文档。\n8. 进行 Git 操作时说明影响范围，不执行 force push、reset --hard 或其他破坏性命令。\n9. 用中文向项目维护者汇报结论和验证结果。"
 }

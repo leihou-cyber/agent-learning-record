@@ -26,6 +26,14 @@ python app.py
 
 本项目包含名为 `ai-learning-notes` 的项目级 agent。Kiro Crew/Kiro CLI 在当前项目目录下会优先发现 `.kiro/agents/*.json`，可在 agent 选择器中选择 `ai-learning-notes`，用于后续实验、开发和维护。
 
+### Agent 与 Skill 配置
+
+- 用 `kiro-cli agent list` 确认列表中出现 `ai-learning-notes (Workspace)`。
+- Kiro Crew dashboard：在聊天顶部的 agent selector 中选择 `ai-learning-notes`；切换 agent 会创建新的会话上下文，当前已经启动的 default 会话不会自动改名。
+- Kiro CLI：从项目根目录使用 `kiro-cli chat --agent ai-learning-notes` 启动指定 agent。
+- agent 已绑定项目级 OpenSpec skills，以及全局 `web-preview` 和 `web-verify` skills；配置位于 `.kiro/agents/ai-learning-notes.json` 的 `resources` 字段。
+- 重要规则：项目 agent 文件“可被发现”不等于“当前会话已选中”，必须在新会话启动时选择或传入 `ai-learning-notes`。
+
 ## 维护约定
 
 - 代码改动后运行 `python3 -m py_compile app.py db.py chapters.py`。
