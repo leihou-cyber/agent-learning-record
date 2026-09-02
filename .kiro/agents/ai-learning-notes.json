@@ -31,6 +31,9 @@
     "skill://.kiro/skills/openspec-propose/SKILL.md",
     "skill://.kiro/skills/openspec-sync-specs/SKILL.md",
     "skill://.kiro/skills/openspec-update-change/SKILL.md",
+    "skill://.kiro/skills/note-writing-standards/SKILL.md",
+    "skill://.kiro/skills/web-iteration-standards/SKILL.md",
+    "skill://.kiro/skills/project-config-standards/SKILL.md",
     "skill://~/.kiro/crew/skills/web-preview/SKILL.md",
     "skill://~/.kiro/crew/skills/web-verify/SKILL.md"
   ],
